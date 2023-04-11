@@ -68,8 +68,9 @@ class Dictionary {
   }
 }
 
+/*
 void main() {
-  /*
+  
   var dict = Dictionary({"HELLO": "DEFINITION"});
   dict.add("BYE", "BYE_DEF");
   dict.showAll();
@@ -84,5 +85,5 @@ void main() {
   dict.showAll();
   dict.bulkDelete(["BYE", "김치"]);
   dict.showAll();
-  */
 }
+*/
