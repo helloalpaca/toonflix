@@ -15,14 +15,13 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        backgroundColor: const Color(0xFFE7626C),
         textTheme: const TextTheme(
           headline1: TextStyle(
-            color: Color(0xFF232B55),
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        //cardColor: const Color(0xFFF4EDDB),
-        cardColor: const Color(0xFFEEFFEE),
       ),
       home: HomeScreen(),
     );

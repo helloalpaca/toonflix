@@ -1,16 +1,9 @@
 # toonflix
 
-A new Flutter project.
+Naver Webtoon List Application made by Flutter
 
-## Getting Started
+2023.04.03 ~ 2023.04.16
 
-This project is a starting point for a Flutter application.
+<img src="./assets/toonflix1.png" width="180px" height="360px" title="toonflix screenshot"/>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="./assets/toonflix2.png" width="180px" height="360px" title="toonflix screenshot"/>

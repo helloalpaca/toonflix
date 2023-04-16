@@ -1,59 +1,56 @@
 import 'dart:convert';
 
+import 'package:toonflix/models/movie_detail_model.dart';
+import 'package:toonflix/models/movie_popular_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:toonflix/models/webtoon_detail_model.dart';
-import 'package:toonflix/models/webtoon_episode_model.dart';
-import 'package:toonflix/models/webtoon_model.dart';
 
 class ApiService {
-  static const String baseUrl =
-      "https://webtoon-crawler.nomadcoders.workers.dev";
-  static const String today = "today";
+  static const moviePopularUrl =
+      "https://movies-api.nomadcoders.workers.dev/popular";
+  static const movieNowPlayingUrl =
+      "https://movies-api.nomadcoders.workers.dev/now-playing";
+  static const movieComingSoonUrl =
+      "https://movies-api.nomadcoders.workers.dev/coming-soon";
+  static const movieDetailUrl =
+      "https://movies-api.nomadcoders.workers.dev/movie";
 
-  static Future<List<WebtoonModel>> getTodaysToons() async {
-    List<WebtoonModel> webtoonInstances = [];
-    final url = Uri.parse("$baseUrl/$today");
+  static Future<List<MovieModel>> getMoviePopularList() async {
+    return getMovieByUrl(moviePopularUrl);
+  }
+
+  static Future<List<MovieModel>> getMovieNowPaying() async {
+    return getMovieByUrl(movieNowPlayingUrl);
+  }
+
+  static Future<List<MovieModel>> getMovieComingSoon() async {
+    return getMovieByUrl(movieComingSoonUrl);
+  }
+
+  static Future<List<MovieModel>> getMovieByUrl(String strUrl) async {
+    final List<MovieModel> movieInstances = [];
+    final url = Uri.parse(strUrl);
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final List<dynamic> webtoons = jsonDecode(response.body);
-      for (var webtoon in webtoons) {
-        var toon = WebtoonModel.fromJson(webtoon);
-        webtoonInstances.add(toon);
+      final json = jsonDecode(response.body);
+      final results = json['results'];
+      for (var movie in results) {
+        var movieInstance = MovieModel.fromJson(movie);
+        movieInstances.add(movieInstance);
       }
-      return webtoonInstances;
+      return movieInstances;
     }
     throw Error();
   }
 
-  static Future<WebtoonDetailModel> getToonById(String id) async {
-    final url = Uri.parse("$baseUrl/$id");
+  static Future<MovieDetailModel> getMovieDetail(int id) async {
+    final url = Uri.parse("$movieDetailUrl?id=$id");
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final webtoon = jsonDecode(response.body);
-
-      return WebtoonDetailModel.fromJson(webtoon);
-    }
-    throw Error();
-  }
-
-  static Future<List<WebtoonEpisodeModel>> getLatestEpisodesById(
-      String id) async {
-    final List<WebtoonEpisodeModel> episodesInstances = [];
-    final url = Uri.parse("$baseUrl/$id/episodes");
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final episodes = jsonDecode(response.body);
-      for (var episode in episodes) {
-        episodesInstances.add(WebtoonEpisodeModel.fromJson(episode));
-      }
-      return episodesInstances;
+      final json = jsonDecode(response.body);
+      final MovieDetailModel movieDetailModel = MovieDetailModel.fromJson(json);
+      return movieDetailModel;
     }
     throw Error();
   }
 }
-
-//TODO: static
-//TODO: final
-//TODO: constructor, named constructor?
-//TODO: 생명주기 다시 공부(fetch 때문에 헷갈림;;)
